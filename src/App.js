@@ -31,6 +31,14 @@ const App = () => {
     setUsers(newUsers);
   };
 
+  const updateUser = (user) => {
+    //
+    console.log(user);
+    //
+    let newArray = users.map((u) => (u.id == user.id ? user : u));
+    setUsers(newArray);
+  };
+
   const deleteUser = (id) => {
     console.log(id);
     let newUsers = users.filter((u) => u.id !== id);
@@ -50,6 +58,7 @@ const App = () => {
           <p>{user.email}</p>
           <p>{user.id}</p>
           <button onClick={() => deleteUser(user.id)}>delete</button>
+          <UserForm updateUser={updateUser} user={user} />
         </div>
       );
     });
