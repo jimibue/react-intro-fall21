@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const Counter = (props) => {
-  console.log(props);
   const { teenCrush, yo } = props;
   // general about useState
   // useState returns a array,
@@ -13,6 +12,7 @@ const Counter = (props) => {
   const increment = () => {
     setCount(count + 1);
   };
+  console.log("Counter Rendering");
   return (
     <div>
       <h1>
