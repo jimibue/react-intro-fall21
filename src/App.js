@@ -1,51 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Counter from "./Counter";
-
-const dummyUsers = [
-  {
-    id: 7,
-    email: "michael.lawson@reqres.in",
-    first_name: "Michael",
-    last_name: "Lawson",
-    avatar: "https://reqres.in/img/faces/7-image.jpg",
-  },
-  {
-    id: 8,
-    email: "lindsay.ferguson@reqres.in",
-    first_name: "Lindsay",
-    last_name: "Ferguson",
-    avatar: "https://reqres.in/img/faces/8-image.jpg",
-  },
-  {
-    id: 9,
-    email: "tobias.funke@reqres.in",
-    first_name: "Tobias",
-    last_name: "Funke",
-    avatar: "https://reqres.in/img/faces/9-image.jpg",
-  },
-  {
-    id: 10,
-    email: "byron.fields@reqres.in",
-    first_name: "Byron",
-    last_name: "Fields",
-    avatar: "https://reqres.in/img/faces/10-image.jpg",
-  },
-  {
-    id: 11,
-    email: "george.edwards@reqres.in",
-    first_name: "George",
-    last_name: "Edwards",
-    avatar: "https://reqres.in/img/faces/11-image.jpg",
-  },
-  {
-    id: 12,
-    email: "rachel.howell@reqres.in",
-    first_name: "Rachel",
-    last_name: "Howell",
-    avatar: "https://reqres.in/img/faces/12-image.jpg",
-  },
-];
+import UserForm from "./UserForm";
 
 const App = () => {
   const [users, setUsers] = useState([]);
@@ -59,14 +15,26 @@ const App = () => {
 
   const getUsers = async () => {
     try {
-      let res = await axios.get("https://reqres.in/ap/users?page=2");
+      let res = await axios.get("https://reqres.in/api/users?page=2");
       console.log(res.data.data);
       setUsers(res.data.data);
     } catch (err) {
       alert("err occured getting user");
-      setUsers(dummyUsers);
+      // setUsers(dummyUsers);
       console.log(err);
     }
+  };
+
+  const addUser = (user) => {
+    // how do I add I user to my array of users.
+    let newUsers = [user, ...users];
+    setUsers(newUsers);
+  };
+
+  const deleteUser = (id) => {
+    console.log(id);
+    let newUsers = users.filter((u) => u.id !== id);
+    setUsers(newUsers);
   };
 
   const renderUsers = () => {
@@ -80,6 +48,8 @@ const App = () => {
           <h1>{`${user.first_name} ${user.last_name}`}</h1>
           <img src={user.avatar} />
           <p>{user.email}</p>
+          <p>{user.id}</p>
+          <button onClick={() => deleteUser(user.id)}>delete</button>
         </div>
       );
     });
@@ -89,6 +59,7 @@ const App = () => {
   return (
     <div>
       <h1>App Component Here!!!!</h1>
+      <UserForm x={addUser} />
       {renderUsers()}
       <Counter />
     </div>
